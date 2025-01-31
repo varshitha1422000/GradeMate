@@ -2,7 +2,6 @@
 
 # Technical Requirements
 1.  Node.js
-2.  React.js
 3.  Git
 
 # Installation
