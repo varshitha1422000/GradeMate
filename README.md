@@ -1,13 +1,13 @@
 # GradeMate
 
 # Technical Requirements
-Node.js
-React.js
-Git
+1.  Node.js
+2.  React.js
+3.  Git
 
-#Installation
+# Installation
 
-Clone the repository using git clone https://github.com/your-username/grademate.git
-Install dependencies using npm install
-Start the server using npm start
-Access the app at http://localhost:3000
+1.  Clone the repository using git clone https://github.com/your-username/grademate.git
+2.  Install dependencies using npm install
+3.  Start the server using npm start
+4.  Access the app at http://localhost:3000
