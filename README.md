@@ -1,4 +1,4 @@
-# GradeMate
+# PrakAI
 
 # Technical Requirements
 1.  Node.js
