@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import './GradeDash.css';
 
-import  icon  from '../../img/icons8-logo-50.png';
 import search from '../../img/icons8-search.svg';
 
 const students = [
@@ -26,7 +25,6 @@ const Dashboard = () => {
   const [questionData, setQuestionData] = useState({
     score: 9,
     totalScore: 10,
-    feedback: "The student has provided a basic understanding of stacks and queues, including their operations and real-life applications.",
     subQuestions: [
       {
         score: 3,
@@ -62,41 +60,24 @@ const Dashboard = () => {
   return (
     <div className="dashboard-content">
         <div className="dashboard-header">
-            <img src={icon} alt="submit-icon" />
-            <button className="primary-button dashboard-button">Dashboard</button>
+            <h2>Maths M001</h2>
+            <aside className="selectStudent">
+                <select
+                    value={selectedStudent}
+                    onChange={(e) => handleSelect(e.target.value)}
+                    className="search-input"
+                 >
+                {filteredStudents.map((student) => (
+                <option className= "student-item" key={student} value={student}>
+                {student}
+                </option>
+                ))}
+                </select>
+            </aside>
         </div>
         <div className="dashboard-container">
-            {/* Sidebar */}
-            <aside className="sidebar">
-                <input
-                type="text"
-                placeholder="Search Student"
-                className="search-input"
-                value={searchTerm}
-                onChange={handleSearch}
-                style={{
-                    backgroundImage: `url(${search})`,
-                    backgroundPosition: '10px',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: '20px',
-                    padding: '10px 20px 10px 40px',
-                  }}
-                />
-                <ul className="student-list">
-                    {filteredStudents.map((student) => (
-                    <li
-                    key={student}
-                    className={`student-item ${selectedStudent === student ? "selected" : ""}`}
-                    onClick={()=>handleSelect(student)}
-                    >
-                    {student}
-                    </li>
-                    ))}
-                </ul>
-            </aside>
-
             {/* Main Content */}
-            <main className="main-content">
+            <main className="mainContent">
                 <div className="questions">
                 <button className="prev" style={{border: "none"}}>{'<'}</button>
                 {[...Array(10).keys()].map((num) => (
@@ -119,7 +100,7 @@ const Dashboard = () => {
                             src={process.env.PUBLIC_URL + "/pdf/cat.pdf#toolbar=0&navpanes=0&page=1&&navpanes=0&zoom=59"}
                             type="application/pdf"
                             width="100%"
-                            height="380"
+                            height="476vh"
                         />
                     </div>
                 </div>
@@ -134,7 +115,6 @@ const Dashboard = () => {
                         <h3>Score: {questionData.score}/{questionData.totalScore}</h3>
                         <button className="approve-button">Approve</button>
                     </div>
-                    <div className="feedback main">{questionData.feedback}</div>
                     <div className="tags">
                         <span className="tag">Strong Argument</span>
                         <span className="tag">Concise</span>
@@ -144,33 +124,68 @@ const Dashboard = () => {
                 {/* Sub Questions Panel */}
                 {questionData.subQuestions.map((sub, index) => (
                 <div className="sub-question-panel" key={index}>
-                    <div>
-                        <h3>Score: {sub.score}/{sub.totalScore}</h3>
-                        <div className="feedback sub">{sub.feedback}</div>
-                    </div>
-                    <div className="chat-container">
-                        <div className="chat-box">
-                            {chatHistory.map((chat, index) => (
-                                <div key={index} className= {`chat-message ${chat.isSystem}`}>{chat.text}</div>
-                            ))}
+                    <div className="score-card">
+                        <div className="score-header">
+                            <h2>Score for Q1.</h2>
+                            <span><h3>Score: {sub.score}/{sub.totalScore}</h3></span>
                         </div>
-                        <div className="comment-section">
-                            <input 
-                            type="text" 
-                            placeholder="Add a comment..."
-                            value={chatInput}
-                            onChange={(e) => setChatInput(e.target.value)}
-                            onKeyPress={(e)=>e.key === 'Enter' && handleSendChat()} />
-                            <button className="primary-button" onClick={handleSendChat}>Send</button>
+                        <p className="score-description">
+                          {sub.feedback}
+                        </p>
+                        {[...Array(4)].map((_, index) => (
+                            <div key={index} className="score-item">
+                                <div className="score-item-content">
+                                    <div>
+                                        <h3>Tempor dolor deserunt</h3>
+                                        <ul>
+                                            <li>Tempor dolor deserunt anim qui</li>
+                                            <li>duis elit ea laboris Lorem.</li>
+                                        </ul>
+                                    </div>
+                                    <div className="progress-container">
+                                        <div className="progress-bar">
+                                        <div className="progress"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    ))}
+                </div>
                 </div>
                 ))}
             </div>
-            </div>
-                <div className="footer">
-                    <button className="primary-button next">Next</button>
+
+            {/* Chat Panel */}
+            <div className="chat-panel">
+                <div className="chat-header">
+                    <h3>I'm Valli, What can I help with?</h3>
                 </div>
+                <div className="chat-history">
+                    {chatHistory.map((message, index) => (
+                    <div
+                        key={index}
+                        className={`chat-message ${message.isSystem}`}
+                    >
+                        {message.text}
+                    </div>
+                    ))}
+                </div>
+                <div className="comment-section">
+                    <input
+                    type="text"
+                    value={chatInput} 
+                    onSubmit={ handleSendChat}   
+                    onChange={(e) => setChatInput(e.target.value)}   
+                    placeholder="Type a message..." 
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                        handleSendChat();
+                        }                                           
+                    }}          
+                    />             
+                </div>
+                </div>
+            </div>
             </div>
   );
 };
