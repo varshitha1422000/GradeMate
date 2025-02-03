@@ -1,0 +1,91 @@
+.container {
+    display: flex;
+    background-color: #ffff;
+    width: -webkit-fill-available;
+  }
+  
+  nav{
+    margin-top:40px
+  }
+
+  .main{
+    width: -webkit-fill-available;
+      select{
+        width: 400px;
+      }
+      .filter select {
+        padding: 5px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+  }
+  .main-content {
+    background: #ffff;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    height: 91vh;
+  }
+
+  .assessment-header{
+    margin: 20px 0;
+    .managed-assessments{
+        margin: 10px 0;
+    }
+  }
+
+  .assessments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    background: #f8f4f7;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    .title{
+        justify-items: left;
+    }
+
+    .card-footer{
+        display: flex;
+        justify-content: space-between;
+        .department{
+            font-weight: bold;
+            color: black;
+        }
+    }
+  }
+  
+  .card .icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+    svg{
+        width: 25px;
+        height: 25px;
+    }
+  }
+  
+  .card .department, .card .semester {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .add-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    background: white;
+    border: 2px dashed gray;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  
