@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { IoDocumentText } from "react-icons/io5";
 import { CgInsights } from "react-icons/cg";
@@ -10,87 +10,90 @@ import { FaAngleDown } from 'react-icons/fa';
 import './TeacherDashboard.css';
 import { Link } from "react-router-dom";
 
-const assessments = [
-  {
-    title: "Maths",
-    code: "M001",
-    department: "Engineering 1st year",
-    semester: "Semester 2",
-    icon: <PiMathOperationsFill />,
-  },
-  {
-    title: "Maths M002",
-    code: "M002",
-    department: "Engineering 1st year",
-    semester: "Semester 2",
-    icon: <PiMathOperationsLight />,
-  },
-  {
-    title: "Neural Networks",
-    code: "NN001",
-    department: "Engineering 1st year",
-    semester: "Semester 2",
-    icon: <BiSolidNetworkChart />
-  },
-];
+const AssessmentsPage = () => {
+  const [assessments, setAssessments] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("Past Assessments");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-export default function AssessmentsPage() {
+  useEffect(() => {
+    const fetchAssessments = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('http://127.0.0.1:5000/teacher/1/assignments'); // Update with dynamic ID if needed
+        console.log('Response status:', response);
+        const contentType = response.headers.get('content-type');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new TypeError("Received non-JSON response");
+        }
+        const data = await response.json();
+        console.log('Received data:', data);
 
-  const [selectedFilter, setSelectedFilter] = React.useState("Past Assessments");
-  
+        setAssessments(data.assignments); // Access the assignments array
+        setError(null);
+      } catch (error) {
+        console.error('Error details:', error);
+        setError('Failed to load assessments');
+        setAssessments([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAssessments();
+  }, []);
+
+  if (loading) return <div>Loading assessments...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <div className="container">
-      {/* Sidebar */}
-      {/* <div className="sidebar">
-        <nav>
-          <ul>
-            <li className="active"><IoDocumentText />Assessments</li>
-            <li><CgInsights />Insights</li>
-          </ul>
-        </nav>
-      </div> */}
-
-    
       <div className="main">
         {/* Main Content */}
         <div className="main-content">
-        <h2>Assessments</h2>
+          <h2>Assessments</h2>
 
-        {/* Dropdown Filter */}
-        <div className="filter">
-          <select value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
-            <option>Past Assessments</option>
-            <option>Upcoming Assessments</option>
-          </select>
-        </div>
+          {/* Dropdown Filter */}
+          <div className="filter">
+            <select value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
+              <option>Past Assessments</option>
+              <option>Upcoming Assessments</option>
+            </select>
+          </div>
 
-        <div className="assessment-header">
+          <div className="assessment-header">
             <div className="managed-assessments">Managed Assessments</div>
             <hr size="2" width="80%" color="#ccc"></hr>
-        </div>
+          </div>
 
-        {/* Assessment Cards */}
-        <div className="assessments-grid">
-          {assessments.map((assessment, index) => (
-            <div key={index} className="card">
-                <Link to = "/gradedash" style={{ textDecoration: 'none' }}>
-              <div className="icon">{assessment.icon}</div>
-              <div className="title">
-                <h3>{assessment.title}</h3>
-                <h3>{assessment.code}</h3>
+          {/* Assessment Cards */}
+          <div className="assessments-grid">
+            {assessments.map((assessment, index) => (
+              <div key={index} className="card">
+                <Link to={`/teacher/${assessment.id}/grading`} style={{ textDecoration: 'none' }}>
+                  <div className="icon"><PiMathOperationsLight /></div>
+                  <div className="title">
+                    <h3>{assessment.name}</h3>
+                    {/* <h3>DS102</h3> */}
+                  </div>
+                  <div className="card-footer">
+                    <p className="department">Computer Science</p>
+                    <p className="semester">2nd Semester</p>
+                  </div>
+                </Link>
               </div>
-              <div className="card-footer">
-                <p className="department">{assessment.department}</p>
-                <p className="semester">{assessment.semester}</p>
-              </div>
-              </Link>
-            </div>
-          ))}
-          {/* Add New Card */}
-          <div className="add-card">+</div>
+            ))}
+            {/* Add New Card */}
+            <div className="add-card">+</div>
+          </div>
         </div>
       </div>
     </div>
-    </div>
   );
-}
+};
+
+export default AssessmentsPage;
