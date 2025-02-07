@@ -1,34 +1,43 @@
-
 .mast-header {
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px 15px 10px;
+    align-items: center;
+    padding: 1rem 0.3rem 1rem 1rem;
   }
-
-.side-header{
-    padding-top: 2px;
+  
+  .side-header {
     display: flex;
-    gap: 10px;
-    img{
-        width: 30px;
-        height: 30px;
-    }
-}
-
-.icons {
+    align-items: center;
+    position: relative;
+  }
+  
+  .side-header img {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.5rem;
+  }
+  
+  .side-header h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  
+  .icons {
     display: flex;
-    gap: 15px;
+    align-items: center;
+  }
+  
+  .icons svg {
+    font-size: 1.5rem;
+    margin-right: 1rem;
     cursor: pointer;
-    svg{
-        width: 20px;
-        height: 20px;
-        margin-top: 5px;
-    }
-}
-
-.profile-pic {
-    width: 30px;
-    height: 30px;
-    background: gray;
-    border-radius: 50%;
   }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #555;
+    cursor: pointer;
+  }
+  

@@ -18,16 +18,16 @@ export default function SideBar() {
         <div className={`sidebar ${expanded ? 'expanded' : ''}`}>
               <nav>
                 <ul>
-                  <li className={expanded ? 'active expanded' : 'active'} onClick={toggleExpansion}>
-                    <IoDocumentText /> 
+                  <li className={expanded ? 'expanded active' : ''} onClick={toggleExpansion}>
+                    <IoDocumentText className={expanded ? 'active' : ''}/> 
                     {expanded && (
                       <span> 
                       Assessments
                       </span>
                     )}
                   </li>
-                  <li className={expanded ? 'expanded' : ''}>
-                    <CgInsights /> 
+                  <li className={expanded ? 'expanded' : ''} onClick={toggleExpansion}>
+                    <CgInsights className={expanded}/> 
                     {expanded && (
                       <span>
                         Insights

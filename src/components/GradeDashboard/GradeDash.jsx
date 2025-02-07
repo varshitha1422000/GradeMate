@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import './GradeDash.css';
-import { useParams } from 'react-router-dom';
+import "./GradeDash.css";
+import { useParams } from "react-router-dom";
+
+import bot from "../../img/bot.png";
+import user from "../../img/user.png";
+import send from "../../img/send.png";
+import mic from "../../img/mic.png";
 
 const students = [
   "Abhay Desali",
@@ -14,7 +19,7 @@ const students = [
 
 const Dashboard = () => {
   const [selectedStudent, setSelectedStudent] = useState(students[0]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [chatInput, setChatInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [currentQst, setCurrentQst] = useState(1);
@@ -127,9 +132,9 @@ const Dashboard = () => {
 
     // Perform the actual regrade
     await fetch(`http://127.0.0.1:5000/submission/${submission_id}/regrade`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -138,8 +143,8 @@ const Dashboard = () => {
 
     // Step 3) Once we’re done, show final updated data
     setTimeout(() => {
-        setRegradeStep("done");
-      }, 3000);
+      setRegradeStep("done");
+    }, 3000);
   };
 
   // ----------------------------------------------
@@ -157,14 +162,13 @@ const Dashboard = () => {
   // ----------------------------------------------
   // Decide what to render based on regradeStep
   // ----------------------------------------------
-  // If you want to show only partial changes (e.g., question panel) 
+  // If you want to show only partial changes (e.g., question panel)
   // you can conditionally render just that panel based on `regradeStep`
-  // and keep the rest of the UI visible. 
+  // and keep the rest of the UI visible.
   // For simplicity, let's do a small inline approach:
   const renderQuestionPanel = () => {
-
     return (
-        <>
+      <>
         <h2 className={`question-title ${question ? "selected" : ""}`}>
           {question}
         </h2>
@@ -174,7 +178,7 @@ const Dashboard = () => {
               src={pdfUrl}
               type="application/pdf"
               width="100%"
-              height="700px"
+              height="675px"
             />
           </div>
         </div>
@@ -208,12 +212,10 @@ const Dashboard = () => {
 
   // And the sub-question panel
   const renderSubQuestionPanel = () => {
-    if ( regradeStep === "regrading") {
+    if (regradeStep === "regrading") {
       return (
         <div className="sub-question-panel">
-          <h4 style={{ textAlign: "center" }}>
-            Regrading Q{currentQst}...
-          </h4>
+          <h4 style={{ textAlign: "center" }}>Regrading Q{currentQst}...</h4>
         </div>
       );
     }
@@ -239,7 +241,7 @@ const Dashboard = () => {
               <div key={index} className="score-item">
                 <div className="score-item-content">
                   <div>
-                    <h5>{c.criterion_name}</h5> <br />
+                    <h4>{c.criterion_name}</h4> <br />
                     <p>{c.feedback}</p>
                   </div>
                   <div className="progress-container">
@@ -289,7 +291,10 @@ const Dashboard = () => {
         {/* Main Content */}
         <main className="mainContent">
           <div className="questions">
-            <button className="prev" style={{ border: "none" }}>
+            <button
+              className="prev"
+              style={{ border: "none", background: "none", fontWeight: "bold" }}
+            >
               {"<"}
             </button>
             {[...Array(8).keys()].map((num) => (
@@ -301,7 +306,10 @@ const Dashboard = () => {
                 {num + 1}
               </button>
             ))}
-            <button className="next" style={{ border: "none" }}>
+            <button
+              className="next"
+              style={{ border: "none", background: "none", fontWeight: "bold" }}
+            >
               {">"}
             </button>
           </div>
@@ -322,22 +330,33 @@ const Dashboard = () => {
           <div className="chat-history">
             {chatHistory.map((message, index) => (
               <div key={index} className={`chat-message ${message.isSystem}`}>
-                {message.text}
+                {message.isSystem === "system" ? (
+                  <img className="bot-icon" src={bot} alt="app-icon" />
+                ) : (
+                  <img className="human-icon" src={user} alt="app-icon" />
+                )}
+                <span>{message.text}</span>
               </div>
             ))}
           </div>
-          <div className="comment-section">
-            <input
-              type="text"
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Type a message..."
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSendChat();
-                }
-              }}
-            />
+          <div className="chat-input-section">
+            <div className="chat-input">
+              <input
+                type="text"
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder="Type a message..."
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSendChat();
+                  }
+                }}
+              />
+              <div className="input-icons">
+                <img src={send} alt="app-icon" />
+                <img src={mic} alt="app-icon" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

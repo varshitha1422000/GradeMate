@@ -1,8 +1,8 @@
 .sidebar {
     top: 65px;
     left: 0;
-    height: 92vh;
-    transition: width 0.4s;
+    width: 50px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     background: rgb(239 223 235);
   }
   
@@ -17,16 +17,15 @@
   }
   
   .sidebar li {
-    padding: 5px;
+    padding: 5px 0;
     cursor: pointer;
+    align-items: center;
+    font-size: large;
   }
-  
-  .sidebar li.active:hover {
-    background-color: #ccc;
-  }
-  
-  .sidebar li.expanded {
-    padding-left: 30px;
+
+  nav{
+    justify-items: center;
+    margin-top: 32px;
   }
   
   .sidebar .expand-icon {
@@ -36,10 +35,6 @@
   
   .sidebar .expanded-content {
     padding-top: 10px;
-  }
-  
-  .sidebar h2 {
-    margin-bottom: 20px;
   }
   
   .sidebar ul {
@@ -53,9 +48,13 @@
     display: flex;
     gap: 6px;
     svg{
-        width: 25px;
-        height: 25px;
+      width: 30px;
+      height: 30px;
     }
+  }
+
+  .sidebar li:hover{
+    color: #b3327c;
   }
 
   .active{

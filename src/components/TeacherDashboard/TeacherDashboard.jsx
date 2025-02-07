@@ -55,7 +55,7 @@ const AssessmentsPage = () => {
       <div className="main">
         {/* Main Content */}
         <div className="main-content">
-          <h2>Assessments</h2>
+          <h2 className="main-title">Assessments</h2>
 
           {/* Dropdown Filter */}
           <div className="filter">
@@ -66,8 +66,8 @@ const AssessmentsPage = () => {
           </div>
 
           <div className="assessment-header">
-            <div className="managed-assessments">Managed Assessments</div>
-            <hr size="2" width="80%" color="#ccc"></hr>
+            <h3 className="managed-assessments">Managed Assessments</h3>
+            <hr size="2" width="100%" color="#ccc"></hr>
           </div>
 
           {/* Assessment Cards */}
