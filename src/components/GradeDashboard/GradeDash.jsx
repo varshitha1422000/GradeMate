@@ -241,7 +241,7 @@ const Dashboard = () => {
               <div key={index} className="score-item">
                 <div className="score-item-content">
                   <div>
-                    <h4>{c.criterion_name}</h4> <br />
+                    <h4>{c.criterion_name}</h4>
                     <p>{c.feedback}</p>
                   </div>
                   <div className="progress-container">
@@ -252,10 +252,10 @@ const Dashboard = () => {
                           width: `${(c.score_awarded / c.max_score) * 100}%`,
                         }}
                       ></div>
-                    </div>
-                    <span>
+                      <span>
                       {c.score_awarded}/{c.max_score}
                     </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -330,11 +330,11 @@ const Dashboard = () => {
           <div className="chat-history">
             {chatHistory.map((message, index) => (
               <div key={index} className={`chat-message ${message.isSystem}`}>
-                {message.isSystem === "system" ? (
+                {/* {message.isSystem === "system" ? (
                   <img className="bot-icon" src={bot} alt="app-icon" />
                 ) : (
                   <img className="human-icon" src={user} alt="app-icon" />
-                )}
+                )} */}
                 <span>{message.text}</span>
               </div>
             ))}
@@ -353,8 +353,8 @@ const Dashboard = () => {
                 }}
               />
               <div className="input-icons">
-                <img src={send} alt="app-icon" />
                 <img src={mic} alt="app-icon" />
+                <img src={send} alt="app-icon" />
               </div>
             </div>
           </div>
