@@ -197,15 +197,16 @@ const Dashboard = () => {
     }
     return (
       <div className="score-panel">
+        <div>
         <div className="score-panel-header">
           <h2>Test Score: {feedback.overall_score}/10</h2>
-          <button className="approve-button">Approve</button>
         </div>
-        <br />
         <div className="tags">
           <span className="tag">Strong Argument</span>
           <span className="tag">Concise</span>
         </div>
+        </div>
+        <button className="approve-button">Approve</button>
       </div>
     );
   };
@@ -252,10 +253,10 @@ const Dashboard = () => {
                           width: `${(c.score_awarded / c.max_score) * 100}%`,
                         }}
                       ></div>
-                      <span>
+                    </div>
+                    <span>
                       {c.score_awarded}/{c.max_score}
                     </span>
-                    </div>
                   </div>
                 </div>
               </div>
