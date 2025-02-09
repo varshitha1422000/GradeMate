@@ -191,7 +191,7 @@
 
 .chat-header {
   justify-items: center;
-  padding: 0 10px;
+  padding: 10px;
   animation: slideIn 0.5s ease-in-out;
   font-weight: bold;
   color: #333;
@@ -259,7 +259,7 @@
   margin: 0 30px;
 }
 
-.chat-input-section input {
+.chat-input-section textarea {
   padding: 12px;
   border: none;
   border-radius: 6px 0 6px 0;
@@ -268,10 +268,11 @@
   background-color: #fff;
   animation: fadeIn 0.5s ease-in-out;
   color: #333;
-  height: 40px;
+  height: 43px;
+  max-height: 100px;
 }
 
-.chat-input-section input:focus {
+.chat-input-section textarea:focus {
   outline: none;
   animation: pulse;
 }

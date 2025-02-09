@@ -3,12 +3,12 @@ import { IoDocumentText } from "react-icons/io5";
 import { CgInsights } from "react-icons/cg";
 import { PiMathOperationsFill, PiMathOperationsLight } from "react-icons/pi";
 import { BiSolidNetworkChart } from "react-icons/bi";
-import { FaAngleDown } from 'react-icons/fa';
+import { FaAngleDown } from "react-icons/fa";
 
 import send from "../../img/send.png";
 import mic from "../../img/mic.png";
 
-import './TeacherDashboard.css';
+import "./TeacherDashboard.css";
 import { Link } from "react-router-dom";
 
 const AssessmentsPage = () => {
@@ -29,27 +29,29 @@ const AssessmentsPage = () => {
   // Fetch Assessments
   // -------------------------------------------
   const fetchAssessments = async () => {
-    console.log('Fetching assessments...');
+    console.log("Fetching assessments...");
     setLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:5000/teacher/1/assignments'); 
-      console.log('Response status:', response);
-      const contentType = response.headers.get('content-type');
-      
+      const response = await fetch(
+        "http://127.0.0.1:5000/teacher/1/assignments"
+      );
+      console.log("Response status:", response);
+      const contentType = response.headers.get("content-type");
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      if (!contentType || !contentType.includes('application/json')) {
+      if (!contentType || !contentType.includes("application/json")) {
         throw new TypeError("Received non-JSON response");
       }
       const data = await response.json();
-      console.log('Received data:', data);
+      console.log("Received data:", data);
 
       setAssessments(data.assignments || []);
       setError(null);
     } catch (err) {
-      console.error('Error details:', err);
-      setError('Failed to load assessments');
+      console.error("Error details:", err);
+      setError("Failed to load assessments");
       setAssessments([]);
     } finally {
       setLoading(false);
@@ -58,7 +60,7 @@ const AssessmentsPage = () => {
 
   useEffect(() => {
     fetchAssessments();
-  }, []); 
+  }, []);
 
   // -------------------------------------------
   // Handle Chat Send
@@ -69,7 +71,7 @@ const AssessmentsPage = () => {
     // Add user's message to chat
     setChatHistory((prev) => [
       ...prev,
-      { text: chatInput, isSystem: "system" }
+      { text: chatInput, isSystem: "system" },
     ]);
     const userMessage = chatInput.trim();
     setChatInput("");
@@ -93,7 +95,7 @@ const AssessmentsPage = () => {
           subject: "Eng Physics",
           description: "Assignment for 2nd semester covering chapters 1 and 2",
           teacher_id: 1, // Replace with the actual teacher ID if needed
-          class_name: "2nd Semester"
+          class_name: "2nd Semester",
         };
 
         // Convert the object to FormData
@@ -103,18 +105,21 @@ const AssessmentsPage = () => {
         });
 
         try {
-          const response = await fetch('http://127.0.0.1:5000/assignment/create', {
-            method: 'POST',
-            body: formData
-            // Don't set the Content-Type header to JSON!
-            // fetch will set it to multipart/form-data automatically
-          });
+          const response = await fetch(
+            "http://127.0.0.1:5000/assignment/create",
+            {
+              method: "POST",
+              body: formData,
+              // Don't set the Content-Type header to JSON!
+              // fetch will set it to multipart/form-data automatically
+            }
+          );
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const result = await response.json();
-          console.log('Assignment created:', result);
+          console.log("Assignment created:", result);
 
           // 2) Refresh the assignments array
           await fetchAssessments();
@@ -125,18 +130,18 @@ const AssessmentsPage = () => {
             ...prev,
             {
               text: "Great news! I've created the assessment. Let me know if you need anything else.",
-              isSystem: true
-            }
+              isSystem: true,
+            },
           ]);
         } catch (err) {
-          console.error('Error creating assignment:', err);
+          console.error("Error creating assignment:", err);
           setCreateStatus("error");
           setChatHistory((prev) => [
             ...prev,
             {
               text: "Failed to create the assignment. Please try again or contact support.",
-              isSystem: true
-            }
+              isSystem: true,
+            },
           ]);
         }
       } else {
@@ -156,7 +161,7 @@ const AssessmentsPage = () => {
             <em>(Describe the properties of electromagnetic waves and explain their origin using Maxwell’s Equations.)</em><br/><br/>
             Does this look good to you? Let me know if you’d like any modifications!
           `,
-          isSystem: true
+          isSystem: true,
         };
         setChatHistory((prev) => [...prev, systemresp]);
       }
@@ -178,7 +183,10 @@ const AssessmentsPage = () => {
 
           {/* Dropdown Filter */}
           <div className="filter">
-            <select value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
+            <select
+              value={selectedFilter}
+              onChange={(e) => setSelectedFilter(e.target.value)}
+            >
               <option>Past Assessments</option>
               <option>Upcoming Assessments</option>
             </select>
@@ -193,7 +201,10 @@ const AssessmentsPage = () => {
           <div className="assessments-grid">
             {assessments.map((assessment, index) => (
               <div key={index} className="card">
-                <Link to={`/teacher/${assessment.id}/grading`} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={`/teacher/${assessment.id}/grading`}
+                  style={{ textDecoration: "none" }}
+                >
                   <div className="icon">
                     <PiMathOperationsLight />
                   </div>
@@ -233,7 +244,8 @@ const AssessmentsPage = () => {
 
         <div className="chat-input-section">
           <div className="chat-input">
-            <input
+            <textarea
+              rows={1}
               type="text"
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
@@ -244,22 +256,18 @@ const AssessmentsPage = () => {
                   handleSendChat();
                 }
               }}
-
-              rows={4}
-      style={{
-        resize: 'none',
-        overflowY: 'hidden',
-        height: 'auto',
-      }}
-      ref={(el) => {
-        if (el) {
-          el.style.height = 'auto';
-          el.style.height = `${el.scrollHeight}px`;
-        }
-      }}
-    
+              ref={(el) => {
+                if (el) {
+                  el.style.height = "auto";
+                  el.style.height = `${el.scrollHeight}px`;
+                }
+              }}
             />
-            <div className="input-icons" onClick={handleSendChat} style={{ cursor: "pointer" }}>
+            <div
+              className="input-icons"
+              onClick={handleSendChat}
+              style={{ cursor: "pointer" }}
+            >
               <img src={mic} alt="mic-icon" />
               <img src={send} alt="send-icon" />
             </div>

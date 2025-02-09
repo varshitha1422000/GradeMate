@@ -354,7 +354,8 @@ const Dashboard = () => {
           </div>
           <div className="chat-input-section">
             <div className="chat-input">
-              <input
+            <textarea
+                rows={1}
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
@@ -362,6 +363,12 @@ const Dashboard = () => {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     handleSendChat();
+                  }
+                }}
+                ref={(el) => {
+                  if (el) {
+                    el.style.height = "auto";
+                    el.style.height = `${el.scrollHeight}px`;
                   }
                 }}
               />
