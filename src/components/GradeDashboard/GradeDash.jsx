@@ -8,7 +8,7 @@ import send from "../../img/send.png";
 import mic from "../../img/mic.png";
 
 const students = [
-  "Abhay Desali",
+  "Hemanth",
   "Matthew Martinez",
   "Elizabeth Hall",
   "Maria White",
@@ -138,13 +138,15 @@ const Dashboard = () => {
       },
     });
 
-    // Re-fetch feedback
-    await fetchFeedback();
-
     // Step 3) Once we’re done, show final updated data
     setTimeout(() => {
       setRegradeStep("done");
+      fetchFeedback();
     }, 3000);
+
+
+    // // Re-fetch feedback
+    // setTimeout(() => { fetchFeedback() }, 3000);
   };
 
   // ----------------------------------------------
@@ -166,7 +168,17 @@ const Dashboard = () => {
   // you can conditionally render just that panel based on `regradeStep`
   // and keep the rest of the UI visible.
   // For simplicity, let's do a small inline approach:
+  const questionPageMap = {
+    1: 1,
+    2: 2,
+    3: 2,
+    4: 3,
+    5: 4,
+    6: 4
+  };
+
   const renderQuestionPanel = () => {
+    const pageNumber = questionPageMap[currentQst] || 1;
     return (
       <>
         <h2 className={`question-title ${question ? "selected" : ""}`}>
@@ -175,7 +187,7 @@ const Dashboard = () => {
         <div className="answer-card">
           <div className="answer-content">
             <embed
-              src={pdfUrl}
+              src={`${pdfUrl}#page=${pageNumber}`}
               type="application/pdf"
               width="100%"
               height="675px"
@@ -198,13 +210,14 @@ const Dashboard = () => {
     return (
       <div className="score-panel">
         <div className="score-panel-header">
-          <h2>Test Score: {feedback.overall_score}/10</h2>
+          <h2>Test Score: {feedback.overall_score}/30</h2>
           <button className="approve-button">Approve</button>
         </div>
         <br />
         <div className="tags">
-          <span className="tag">Strong Argument</span>
-          <span className="tag">Concise</span>
+          <span className="tag">Well-Structured</span>
+          <span className="tag">Strong Theory</span>
+          <span className="tag">Incomplete Calculations</span>
         </div>
       </div>
     );
@@ -271,7 +284,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-content">
       <div className="dashboard-header">
-        <h2>Data Structures 101</h2>
+        <h2>Optics and Waves- 4th Semester</h2>
         <aside className="selectStudent">
           <select
             value={selectedStudent}
@@ -297,7 +310,7 @@ const Dashboard = () => {
             >
               {"<"}
             </button>
-            {[...Array(8).keys()].map((num) => (
+            {[...Array(6).keys()].map((num) => (
               <button
                 key={num + 1}
                 className={num + 1 === currentQst ? "active" : ""}
@@ -325,7 +338,7 @@ const Dashboard = () => {
         {/* Chat Panel */}
         <div className="chat-panel">
           <div className="chat-header">
-            <h3>I'm Valli, what can I help with?</h3>
+            <h3>I'm PrakAI. How can I assist you today?</h3>
           </div>
           <div className="chat-history">
             {chatHistory.map((message, index) => (

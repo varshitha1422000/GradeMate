@@ -81,16 +81,16 @@ const AssessmentsPage = () => {
         // 1) Show something like "Creating assignment..."
         setCreateStatus("submitting");
 
-        // Also post a message to chat so the user sees what's happening
-        setChatHistory((prev) => [
-          ...prev,
-          { text: "Okay, I'm creating your assignment now...", isSystem: true }
-        ]);
+        // // Also post a message to chat so the user sees what's happening
+        // setChatHistory((prev) => [
+        //   ...prev,
+        //   { text: "Okay, I'm creating your assignment now...", isSystem: true }
+        // ]);
 
         // Prepare form data (since the server uses request.form)
         const assignmentData = {
-          assignment_name: "Phys 201",
-          subject: "Physics",
+          assignment_name: "Quantum Electromagnetics",
+          subject: "Eng Physics",
           description: "Assignment for 2nd semester covering chapters 1 and 2",
           teacher_id: 1, // Replace with the actual teacher ID if needed
           class_name: "2nd Semester"
@@ -200,11 +200,11 @@ const AssessmentsPage = () => {
                   <div className="title">
                     <h3>{assessment.name}</h3>
                   </div>
-                  <div className="card-footer">
-                    <p className="department">{assessment.subject}</p>
-                    <p className="semester">2nd Semester</p>
-                  </div>
                 </Link>
+                <div className="card-footer">
+                  <p className="department">{assessment.subject}</p>
+                  <p className="semester">{assessment.class}</p>
+                </div>
               </div>
             ))}
             {/* Add New Card */}
@@ -216,7 +216,7 @@ const AssessmentsPage = () => {
       {/* Chat Panel */}
       <div className="chat-panel">
         <div className="chat-header">
-          <h3>I'm Valli, what can I help with?</h3>
+          <h3>I'm PrakAI. How can I assist you today?</h3>
         </div>
         <div className="chat-history">
           {chatHistory.map((message, index) => (
@@ -239,10 +239,25 @@ const AssessmentsPage = () => {
               onChange={(e) => setChatInput(e.target.value)}
               placeholder="Type a message..."
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
                   handleSendChat();
                 }
               }}
+
+              rows={4}
+      style={{
+        resize: 'none',
+        overflowY: 'hidden',
+        height: 'auto',
+      }}
+      ref={(el) => {
+        if (el) {
+          el.style.height = 'auto';
+          el.style.height = `${el.scrollHeight}px`;
+        }
+      }}
+    
             />
             <div className="input-icons" onClick={handleSendChat} style={{ cursor: "pointer" }}>
               <img src={mic} alt="mic-icon" />

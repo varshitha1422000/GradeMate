@@ -107,16 +107,24 @@
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .title {
   justify-items: left;
   font-size: 1.1rem;
+  margin-bottom: auto;
 }
 
 .card-footer {
-  /* display: flex; */
+  display: flex;
   justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  /* padding: px 5px; Decrease left and right padding */
+  background-color: transparent; /* Remove grey background */
 }
 
 .department {
@@ -161,12 +169,6 @@
   transform: translateY(-2px);
 }
 
-.card-footer {
-  padding: 10px;
-  background-color: #f7f7f7;
-  border-top: 1px solid #ddd;
-}
-
 .card-footer p {
   font-size: 16px;
   color: #666;
@@ -200,6 +202,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;  /* Keep messages pinned at the bottom */
   gap: 8px;
   padding: 5px;
   margin-top: 20px;

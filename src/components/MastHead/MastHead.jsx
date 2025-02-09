@@ -11,7 +11,7 @@ export default function MastHead() {
         <div className="mast-header">
             <div className="side-header">
                 <img src={logo} alt="app-icon" />
-                <h3>Hi Pankajam</h3>
+                <h3>Hi Prasad</h3>
             </div>
             <div className="icons">
                 <FaRegQuestionCircle />
